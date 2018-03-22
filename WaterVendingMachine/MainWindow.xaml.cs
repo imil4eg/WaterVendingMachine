@@ -140,6 +140,7 @@ namespace WaterVendingMachine
 
                 while (Money > 0 && CurrentStatus == Status.Pouring)
                 {
+                    // TODO : Тута логика вычета
                     Minus();
                     Money -= 2;
                     MainScreenText = "Баланс : " + Money;
