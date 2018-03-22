@@ -1,0 +1,226 @@
+﻿<Window x:Class="WaterVendingMachine.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WaterVendingMachine"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Вода" Height="650" Width="325">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <!-- Water side -->
+        <Border Grid.Column="0">
+            <Border>
+                <Border HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 150 0 0" 
+                        BorderBrush="Gray" Width="80" BorderThickness="2" Height="100">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <LinearGradientBrush.GradientStops>
+                                <GradientStop Color="#808080" Offset="0"/>
+                                <GradientStop Color="#A9A9A9" Offset="1"/>
+                                <GradientStop Color="#C0C0C0" Offset="0"/>
+                                <GradientStop Color="#D3D3D3" Offset="1"/>
+                            </LinearGradientBrush.GradientStops>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    
+                </Border>
+            </Border>
+        </Border>
+        <Border Grid.Column="1" Background="Gray" Width="5"/>
+        <!-- Controls side -->
+        <Border Grid.Column="2">
+            <Border Margin="3" CornerRadius="5">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Color="#1a84b8" Offset="0"/>
+                            <GradientStop Color="#1a8cb8" Offset="0"/>
+                            <GradientStop Color="#1a94b8" Offset="0"/>
+                            <GradientStop Color="#1a9cb8" Offset="1"/>
+                            <GradientStop Color="#1aa4b8" Offset="1"/>
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Border BorderBrush="White" Margin="5"
+                            BorderThickness="2"
+                            Background="RoyalBlue"
+                            CornerRadius="5">
+                        <TextBlock Text="1 ЛИТР - 3 РУБ." Foreground="White" Margin="2"/>
+                    </Border>
+                    <StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Border Width="80"
+                                Height="37"
+                                HorizontalAlignment="Left"
+                                Margin="5 0 0 0"
+                                BorderBrush="White"
+                                BorderThickness="2"
+                                Background="Black"
+                                CornerRadius="5">
+                            <TextBlock Text="{Binding Path=MainScreenText}" Name="MainTexBlock" Foreground="ForestGreen" Padding="1" Width="70" FontSize="10"/>
+                        </Border>
+                        <StackPanel VerticalAlignment="Center" Margin="0 6 0 0">
+                            <TextBlock Text="Налив/Пауза" Foreground="White" FontSize="13" HorizontalAlignment="Center"/>
+                            <Button Width="10" Height="10" Margin="0 2 0 0" Click="StartAndStopPounding">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Grid>
+                                            <Ellipse Stroke="White" StrokeThickness="1" Fill="MidnightBlue"/>
+                                            <Ellipse />
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                            
+                            <Grid Margin="0 8 0 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel>
+                                    <Button Width="10" Height="10" Margin="0 2 0 0" Click="GiveChange">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="{x:Type Button}">
+                                                <Grid>
+                                                    <Ellipse Stroke="White" StrokeThickness="1" Fill="Gray"/>
+                                                    <Ellipse />
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                    <TextBlock Text="СДАЧА" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+                                </StackPanel>
+                                <Border BorderBrush="White" BorderThickness="1" Grid.Column="1"
+                                        Width="5" Background="Black" Height="13" CornerRadius="5" MouseLeftButtonDown="OnCoinInput">
+
+                                </Border>
+                                <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Margin="5 5 0 0">
+                                    <Grid HorizontalAlignment="Right">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <Polygon Grid.Row="0" Fill="White" Points="7 0 15 5 0 5" HorizontalAlignment="Left" Margin="0 0 10 0"/>
+                                        <Rectangle Grid.Row="1" Fill="White" Height="5" Width="10" Margin="0 0 10 0" HorizontalAlignment="Center"/>
+                                    </Grid>
+                                    <Line Stroke="White" StrokeThickness="1"
+                              X1="{Binding Path=Width, RelativeSource={RelativeSource Self}}"
+                              Width="65"
+                              Height="2"
+                              />
+                                    <TextBlock Text="МОНЕТЫ" Foreground="White" FontSize="8"/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Ellipse Stroke="White" StrokeThickness="1" Grid.Column="0"
+                                                 Width="12" Height="12"/>
+                                        <TextBlock Grid.Column="0" Text="1" Foreground="White" FontSize="8"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <Ellipse Stroke="White" StrokeThickness="1" Grid.Column="1"
+                                                 Width="12" Height="12"/>
+                                        <TextBlock Grid.Column="1" Text="2" Foreground="White" FontSize="8"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <Ellipse Stroke="White" StrokeThickness="1" Grid.Column="2"
+                                                 Width="12" Height="12"/>
+                                        <TextBlock Grid.Column="2" Text="5" Foreground="White" FontSize="8"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <Ellipse Stroke="White" StrokeThickness="1" Grid.Column="3"
+                                                 Width="12" Height="12"/>
+                                        <TextBlock Grid.Column="3" Text="10" Foreground="White" FontSize="8"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="4" Text="РУБ." Foreground="White"/>
+                                    </Grid>
+                                    <Line Stroke="White" StrokeThickness="1"
+                              X1="{Binding Path=Width, RelativeSource={RelativeSource Self}}"
+                              Width="65"
+                              Height="2"
+                              Margin="0 4 0 0"
+                        />
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" HorizontalAlignment="Right"
+                                VerticalAlignment="Center" Margin="0 30 0 0">
+                        <Line Stroke="White" StrokeThickness="1"
+                              X1="{Binding Path=Width, RelativeSource={RelativeSource Self}}"
+                              Width="58"
+                              Height="2"
+                              />
+                        <TextBlock Text="КУПЮРЫ" Foreground="White" FontSize="8"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" BorderBrush="White" BorderThickness="1"
+                                    HorizontalAlignment="Left" Width="15" Height="12">
+                                <TextBlock Text="10" Foreground="White" FontSize="9" HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Column="1" BorderBrush="White" BorderThickness="1"
+                                    HorizontalAlignment="Center" Width="15" Height="12">
+                                <TextBlock Text="50" Foreground="White" FontSize="9" HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Column="2" BorderBrush="White" BorderThickness="1"
+                                    HorizontalAlignment="Right" Width="15" Height="12">
+                                <TextBlock Text="100" Foreground="White" FontSize="9" HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Grid.Column="3" Text="РУБ." Foreground="White" FontSize="6" VerticalAlignment="Center"/>
+                        </Grid>
+                        <Line Stroke="White" StrokeThickness="1"
+                              X1="{Binding Path=Width, RelativeSource={RelativeSource Self}}"
+                              Width="58"
+                              Height="2"
+                              Margin="0 4 0 0"
+                        />
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Rectangle Fill="White" Height="5" Width="10"/>
+                            <Polygon  Grid.Row="1" Fill="White" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                                    Points="0 0 7 5 15 0"/>
+                        </Grid>
+
+                        <Border Name="PaperInput" BorderBrush="White" BorderThickness="2" Background="Black"
+                                Height="10" CornerRadius="5" MouseLeftButtonDown="OnPaperMoneyInput"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="2">
+                        <TextBlock Text="СДАЧА" Foreground="White" FontSize="10" HorizontalAlignment="Center"/>
+                        <Border CornerRadius="5" BorderBrush="White" BorderThickness="2" Height="50" Width="50" Background="Gray"
+                                MouseLeftButtonDown="TakeChange">
+                            <Border Margin="5" Background="Wheat"/>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Border>
+    </Grid>
+</Window>
